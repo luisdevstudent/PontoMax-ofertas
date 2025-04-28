@@ -621,18 +621,39 @@
         
         // Função para verificar se a oferta está válida
         function isOfferValid(startDateStr, endDateStr) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            const [startDay, startMonth, startYear] = startDateStr.split('/');
-            const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
-            
-            const [endDay, endMonth, endYear] = endDateStr.split('/');
-            const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
-            endDate.setHours(23, 59, 59, 999);
-            
-            return today >= startDate && today <= endDate;
+               const today = new Date();
+               today.setHours(0, 0, 0, 0);
+    
+              // Converte datas no formato DD/MM/AAAA
+              const [startDay, startMonth, startYear] = startDateStr.split('/');
+              const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
+    
+              const [endDay, endMonth, endYear] = endDateStr.split('/');
+              const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
+              endDate.setHours(23, 59, 59, 999);  // Fim do dia
+    
+              return today >= startDate && today <= endDate;
         }
+
+
+        // Função para formatar datas corretamente (DD/MM/AAAA)
+function formatDate(dateString) {
+    // Converte a string de data para objeto Date
+    const [day, month, year] = dateString.split('/');
+    const date = new Date(year, month - 1, day); // mês é 0-indexed
+    
+    // Ajuste para o fuso horário do Brasil (UTC-3)
+    date.setHours(date.getHours() + 3);
+    
+    // Formatação garantindo 2 dígitos
+    const formattedDay = date.getDate().toString().padStart(2, '0');
+    const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
+    const formattedYear = date.getFullYear();
+    
+    return `${formattedDay}/${formattedMonth}/${formattedYear}`;
+}
+
+        
         
         // Função para mostrar as ofertas
         function showOffers() {
@@ -661,8 +682,8 @@
                     offerCard.className = 'offer-card';
                     
                     // Formata as datas para exibição
-                    const startDate = new Date(offer.startDate.split('/').reverse().join('-'));
-                    const endDate = new Date(offer.endDate.split('/').reverse().join('-'));
+                    const startDate = offer.startDate; // Já está no formato DD/MM/AAAA
+                    const endDate = offer.endDate;     
                     
                     offerCard.innerHTML = `
                         <img src="${offer.img}" alt="${offer.title}" class="offer-img">
