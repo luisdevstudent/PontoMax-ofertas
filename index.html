@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofertas Ponto Max - O ponto certo de suas compras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" href="logo-ponto.png" type="image/x-icon">
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #FF6B6B;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --accent: #FFE66D;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-decoration: none;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff1d1d 0%, #800000 100%, #ce1b1b 80%);
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/XFZQZ3Q.png') repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-img {
+            max-width: 300px;
+            height: auto;
+            object-fit: contain;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+        
+        .selection-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .selection-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .city-buttons, .category-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+        
+        .btn-city {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .btn-city:hover, .btn-city.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-category {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-category:hover, .btn-category.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .offers-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .offers-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: var(--accent);
+        }
+        
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .offer-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+        }
+        
+        .offer-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        .offer-info {
+            padding: 20px;
+        }
+        
+        .offer-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .offer-valid {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .offer-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .offer-btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+            padding-bottom: 30px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .facebook:hover { background: #3b5998; }
+        .instagram:hover { background: #e4405f; }
+        .whatsapp:hover { background: #25d366; }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: var(--primary);
+        }
+        
+        .expired-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+        
+        .no-selection {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .logo-img {
+                max-width: 250px;
+            }
+
+            .city-buttons, .category-buttons {
+            flex-direction: column;
+            align-items: center;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .selection-panel {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .offers-title {
+                font-size: 1.5rem;
+            }
+            
+            .offers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                max-width: 95%;
+                max-height: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <!-- Substitua a URL pela imagem da sua logo -->
+                <img src="logo_pontomax_v3.png" alt="Logo Super Ofertas" class="logo-img">
+            </div>
+            <p class="tagline">Confira nossas ofertas!</p>
+        </header>
+        
+        <div class="selection-panel">
+            <h2 class="selection-title">SELECIONE UMA CIDADE</h2>
+            <div class="city-buttons">
+                <button class="btn btn-city" data-city="balsas">Balsas</button>
+                <button class="btn btn-city" data-city="fortaleza">Fortaleza</button>
+            </div>
+            
+            <h2 class="selection-title">SELECIONE UMA CATEGORIA</h2>
+            <div class="category-buttons">
+                <button class="btn btn-category" data-category="mercado">Mercado</button>
+                <button class="btn btn-category" data-category="bazar">Bazar</button>
+                <button class="btn btn-category" data-category="eletro">Eletro</button>
+                <button class="btn btn-category" data-category="site">Site</button>
+            </div>
+        </div>
+        
+        <div id="offers-container" class="offers-container">
+            <h2 class="offers-title" id="offers-title">Aproveite para comprar barato 🔥</h2>
+            <div class="offers-grid" id="offers-grid">
+                <div class="no-selection">
+                    <h3>Selecione uma cidade e uma categoria para ver as ofertas</h3>
+                    <p>Escolha nos menus acima para visualizar nossas promoções</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link whatsapp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+    
+    <!-- Modal para visualização do encarte -->
+    <div id="offer-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img id="modal-image" class="modal-content" src="" alt="Encarte completo">
+    </div>
+    
+    <script>
+        // Função para formatar datas
+        function formatDate(date) {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+        
+        // Dados das ofertas com datas de validade
+        const offersData = {
+            balsas: {
+                mercado: [
+                    {
+                        img: "https://i.imgur.com/JqYeZ0x.jpg",
+                        title: "Oferta da Semana",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/p3z1vQj.jpg",
+                        title: "Carnes Especiais",
+                        startDate: "15/06/2023",
+                        endDate: "28/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/5QzZQZ3.jpg",
+                        title: "Promoção de Laticínios",
+                        startDate: "25/06/2023",
+                        endDate: "01/07/2023"
+                    }
+                ],
+                bazar: [
+                    {
+                        img: "https://i.imgur.com/XFZQZ3Q.jpg",
+                        title: "Utensílios Domésticos",
+                        startDate: "10/06/2023",
+                        endDate: "25/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/JqYeZ0x.jpg",
+                        title: "Promoção de Cama, Mesa e Banho",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
+                    }
+                ],
+                eletro: [
+                    {
+                        img: "https://i.imgur.com/p3z1vQj.jpg",
+                        title: "Eletrodomésticos em Oferta",
+                        startDate: "20/06/2023",
+                        endDate: "05/07/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/5QzZQZ3.jpg",
+                        title: "Linha Branca com Desconto",
+                        startDate: "15/06/2023",
+                        endDate: "03/07/2023"
+                    }
+                ],
+                site: [
+                    {
+                        img: "https://i.imgur.com/XFZQZ3Q.jpg",
+                        title: "Ofertas Exclusivas do Site",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
+                    }
+                ]
+            },
+            fortaleza: {
+                mercado: [
+                    {
+                        img: "https://i.imgur.com/5QzZQZ3.jpg",
+                        title: "Super Ofertas de Alimentos",
+                        startDate: "20/06/2023",
+                        endDate: "02/07/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/JqYeZ0x.jpg",
+                        title: "Promoção de Hortifruti",
+                        startDate: "15/06/2023",
+                        endDate: "28/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/p3z1vQj.jpg",
+                        title: "Descontos em Bebidas",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
+                    }
+                ],
+                bazar: [
+                    {
+                        img: "https://i.imgur.com/XFZQZ3Q.jpg",
+                        title: "Ofertas de Bazar",
+                        startDate: "10/06/2023",
+                        endDate: "25/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/JqYeZ0x.jpg",
+                        title: "Promoção de Utilidades Domésticas",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/5QzZQZ3.jpg",
+                        title: "Descontos em Decoração",
+                        startDate: "20/06/2023",
+                        endDate: "01/07/2023"
+                    }
+                ],
+                eletro: [
+                    {
+                        img: "https://i.imgur.com/p3z1vQj.jpg",
+                        title: "Eletrônicos em Promoção",
+                        startDate: "20/06/2023",
+                        endDate: "05/07/2023"
+                    }
+                ],
+                site: [
+                    {
+                        img: "https://i.imgur.com/XFZQZ3Q.jpg",
+                        title: "Ofertas Online Exclusivas",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/JqYeZ0x.jpg",
+                        title: "Compre Online com Desconto",
+                        startDate: "15/06/2023",
+                        endDate: "28/06/2023"
+                    }
+                ]
+            }
+        };
+        
+        // Elementos do DOM
+        const cityButtons = document.querySelectorAll('.btn-city');
+        const categoryButtons = document.querySelectorAll('.btn-category');
+        const offersContainer = document.getElementById('offers-container');
+        const offersTitle = document.getElementById('offers-title');
+        const citySpan = document.getElementById('city-span');
+        const categorySpan = document.getElementById('category-span');
+        const offersGrid = document.getElementById('offers-grid');
+        const modal = document.getElementById('offer-modal');
+        const modalImg = document.getElementById('modal-image');
+        const closeModal = document.querySelector('.close-modal');
+        
+        // Variáveis de estado
+        let selectedCity = null;
+        let selectedCategory = null;
+        
+        // Event listeners para os botões de cidade
+        cityButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                cityButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                selectedCity = button.dataset.city;
+                
+                // Mostra mensagem se não tiver categoria selecionada
+                if (!selectedCategory) {
+                    showSelectionMessage();
+                    return;
+                }
+                
+                // Se já tiver uma categoria selecionada, mostra as ofertas
+                showOffers();
+            });
+        });
+        
+        // Event listeners para os botões de categoria
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                selectedCategory = button.dataset.category;
+                
+                // Mostra mensagem se não tiver cidade selecionada
+                if (!selectedCity) {
+                    showSelectionMessage();
+                    return;
+                }
+                
+                // Se já tiver uma cidade selecionada, mostra as ofertas
+                showOffers();
+            });
+        });
+
+        // Função para mostrar mensagem de seleção necessária
+        function showSelectionMessage() {
+            offersContainer.style.display = 'block';
+            offersGrid.innerHTML = `
+                <div class="no-selection">
+                    <h3>${!selectedCity && !selectedCategory 
+                        ? 'Selecione uma cidade e uma categoria para ver as ofertas' 
+                        : !selectedCity 
+                            ? 'Selecione uma cidade para ver as ofertas' 
+                            : 'Selecione uma categoria para ver as ofertas'}</h3>
+                    <p>Escolha nos menus acima para visualizar nossas promoções</p>
+                </div>
+            `;
+            offersTitle.textContent = "Aproveite para comprar barato 🔥";
+        }
+        
+        // Função para verificar se a oferta está válida
+        function isOfferValid(startDateStr, endDateStr) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const [startDay, startMonth, startYear] = startDateStr.split('/');
+            const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
+            
+            const [endDay, endMonth, endYear] = endDateStr.split('/');
+            const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
+            endDate.setHours(23, 59, 59, 999);
+            
+            return today >= startDate && today <= endDate;
+        }
+        
+        // Função para mostrar as ofertas
+        function showOffers() {
+            // Atualiza o título
+            citySpan.textContent = selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1);
+            categorySpan.textContent = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
+            offersTitle.textContent = `Ofertas em ${citySpan.textContent} - ${categorySpan.textContent}`;
+            
+            // Limpa o grid de ofertas
+            offersGrid.innerHTML = '';
+            
+            // Obtém as ofertas para a cidade e categoria selecionadas
+            const offers = offersData[selectedCity][selectedCategory];
+            
+            // Contador de ofertas válidas
+            let validOffersCount = 0;
+            
+            // Cria os cards de oferta
+            offers.forEach(offer => {
+                const isValid = isOfferValid(offer.startDate, offer.endDate);
+                
+                if (isValid) {
+                    validOffersCount++;
+                    
+                    const offerCard = document.createElement('div');
+                    offerCard.className = 'offer-card';
+                    
+                    // Formata as datas para exibição
+                    const startDate = new Date(offer.startDate.split('/').reverse().join('-'));
+                    const endDate = new Date(offer.endDate.split('/').reverse().join('-'));
+                    
+                    offerCard.innerHTML = `
+                        <img src="${offer.img}" alt="${offer.title}" class="offer-img">
+                        <div class="offer-info">
+                            <h3 class="offer-name">${offer.title}</h3>
+                            <p class="offer-valid">Válido de ${formatDate(startDate)} até ${formatDate(endDate)}</p>
+                            <div class="offer-btn ver-encarte">Ver Encarte</div>
+                        </div>
+                    `;
+                    
+                    // Adiciona evento de clique para abrir o modal
+                    const imgElement = offerCard.querySelector('.offer-img');
+                    const btnElement = offerCard.querySelector('.ver-encarte');
+                    
+                    const openModal = () => {
+                        modal.style.display = 'flex';
+                        modalImg.src = offer.img;
+                        document.body.style.overflow = 'hidden';
+                    };
+                    
+                    imgElement.addEventListener('click', openModal);
+                    btnElement.addEventListener('click', openModal);
+                    
+                    offersGrid.appendChild(offerCard);
+                }
+            });
+            
+            // Se não houver ofertas válidas, mostra mensagem
+            if (validOffersCount === 0) {
+                offersGrid.innerHTML = `
+                    <div class="no-selection">
+                        <h3>Nenhuma oferta disponível no momento</h3>
+                        <p>Volte em breve para conferir nossas promoções!</p>
+                    </div>
+                `;
+            }
+            
+            // Mostra o container de ofertas
+            offersContainer.style.display = 'block';
+            
+            // Rola a página até as ofertas
+            offersContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Fechar modal ao clicar no X
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Fechar modal ao clicar fora da imagem
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Mostra mensagem inicial
+        showSelectionMessage();
+    </script>
+</body>
+</html>
