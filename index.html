@@ -639,122 +639,168 @@
         
         // Função para mostrar as ofertas
         function showOffers() {
-            // Elementos do DOM
-            const citySpan = document.getElementById('city-span');
-            const categorySpan = document.getElementById('category-span');
-            const offersTitle = document.getElementById('offers-title');
-            const offersGrid = document.getElementById('offers-grid');
-            
-            // Verifica se os elementos existem
-            if (!citySpan || !categorySpan || !offersTitle || !offersGrid) {
-                console.error('Elementos não encontrados! Verifique os IDs no HTML');
-                return;
-            }
+    // 1. Obter todos os elementos necessários de forma segura
+    const elements = {
+        citySpan: document.getElementById('city-span'),
+        categorySpan: document.getElementById('category-span'),
+        offersTitle: document.getElementById('offers-title'),
+        offersGrid: document.getElementById('offers-grid'),
+        offersContainer: document.getElementById('offers-container'),
+        modal: document.getElementById('offer-modal')
+    };
 
-            // Atualiza o título
-            citySpan.textContent = selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1);
-            categorySpan.textContent = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
-            offersTitle.textContent = `Ofertas em ${citySpan.textContent} - ${categorySpan.textContent}`;
-            
-            // Limpa o grid de ofertas
-            offersGrid.innerHTML = '';
-            
-            // Obtém as ofertas para a cidade e categoria selecionadas
-            const offers = offersData[selectedCity][selectedCategory];
-            
-            // Contador de ofertas válidas
-            let validOffersCount = 0;
-            
-            // Cria os cards de oferta
-            offers.forEach(offer => {
-                const isValid = isOfferValid(offer.startDate, offer.endDate);
-                
-                if (isValid) {
-                    validOffersCount++;
-                    
-                    const offerCard = document.createElement('div');
-                    offerCard.className = 'offer-card';
-                    
-                    offerCard.innerHTML = `
-                        <div class="offer-images-preview">
-                            ${offer.encartes.slice(0, 3).map(img => `
-                                <img src="${img}" alt="Preview" class="encarte-preview">
-                            `).join('')}
-                            ${offer.encartes.length > 3 ? `<div class="more-images">+${offer.encartes.length - 3}</div>` : ''}
-                        </div>
-                        <div class="offer-info">
-                            <h3 class="offer-name">${offer.title}</h3>
-                            <p class="offer-valid">Visível a partir das 19h do dia ${getPreviousDayFormatted(offer.startDate)} até ${formatDate(offer.endDate)}</p>
-                            <div class="offer-btn ver-encarte">Ver Encarte Completo</div>
-                        </div>
-                    `;
-                    
-                    // Adiciona evento de clique para abrir o modal
-                    const previewImages = offerCard.querySelectorAll('.encarte-preview');
-                    const verEncarteBtn = offerCard.querySelector('.ver-encarte');
-                    
-                    const openModal = () => {
-                        modal.style.display = 'flex';
-                        modal.innerHTML = `
-                            <span class="close-modal">&times;</span>
-                            <h3 class="modal-title">${offer.title}</h3>
-                            <div class="encarte-gallery">
-                                ${offer.encartes.map(img => `
-                                    <img src="${img}" class="gallery-image" alt="Encarte ${offer.title}">
-                                `).join('')}
-                            </div>
-                            <div class="gallery-nav">
-                                <button class="prev-btn">❮ Anterior</button>
-                                <button class="next-btn">Próximo ❯</button>
-                            </div>
-                        `;
-                        
-                        // Fechar modal
-                        document.querySelector('.close-modal').addEventListener('click', () => {
-                            modal.style.display = 'none';
-                            document.body.style.overflow = 'auto';
-                        });
-                        
-                        // Fechar ao clicar fora
-                        modal.addEventListener('click', (e) => {
-                            if (e.target === modal) {
-                                modal.style.display = 'none';
-                                document.body.style.overflow = 'auto';
-                            }
-                        });
-                        
-                        // Inicializa navegação
-                        const images = document.querySelectorAll('.gallery-image');
-                        initGalleryNavigation(images);
-                    };
-                    
-                    // Adiciona evento para cada imagem de preview e para o botão
-                    previewImages.forEach(img => {
-                        img.addEventListener('click', openModal);
-                    });
-                    
-                    verEncarteBtn.addEventListener('click', openModal);
-                    
-                    offersGrid.appendChild(offerCard);
-                }
-            });
-            
-            // Se não houver ofertas válidas, mostra mensagem
-            if (validOffersCount === 0) {
-                offersGrid.innerHTML = `
-                    <div class="no-selection">
-                        <h3>Nenhuma oferta disponível no momento</h3>
-                        <p>Volte em breve para conferir nossas promoções!</p>
-                    </div>
-                `;
-            }
-            
-            // Mostra o container de ofertas
-            offersContainer.style.display = 'block';
-            
-            // Rola a página até as ofertas
-            offersContainer.scrollIntoView({ behavior: 'smooth' });
+    // 2. Verificar se todos os elementos existem
+    for (const [name, element] of Object.entries(elements)) {
+        if (!element) {
+            console.error(`Elemento não encontrado: ${name}`);
+            return;
         }
+    }
+
+    // 3. Verificar se existem ofertas para a seleção
+    if (!offersData[selectedCity] || !offersData[selectedCity][selectedCategory]) {
+        elements.offersGrid.innerHTML = `
+            <div class="no-selection">
+                <h3>Nenhuma oferta disponível para esta combinação</h3>
+                <p>Selecione outra cidade ou categoria</p>
+            </div>`;
+        elements.offersContainer.style.display = 'block';
+        return;
+    }
+
+    // 4. Atualizar o título
+    elements.citySpan.textContent = selectedCity.charAt(0).toUpperCase() + selectedCity.slice(1);
+    elements.categorySpan.textContent = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
+    elements.offersTitle.textContent = `Ofertas em ${elements.citySpan.textContent} - ${elements.categorySpan.textContent}`;
+
+    // 5. Limpar o grid
+    elements.offersGrid.innerHTML = '';
+
+    // 6. Processar ofertas
+    const offers = offersData[selectedCity][selectedCategory];
+    let validOffersCount = 0;
+
+    offers.forEach(offer => {
+        if (!isOfferValid(offer.startDate, offer.endDate)) return;
+
+        validOffersCount++;
+        const offerCard = createOfferCard(offer, elements.modal);
+        elements.offersGrid.appendChild(offerCard);
+    });
+
+    // 7. Mostrar mensagem se não houver ofertas
+    if (validOffersCount === 0) {
+        elements.offersGrid.innerHTML = `
+            <div class="no-selection">
+                <h3>Nenhuma oferta disponível no momento</h3>
+                <p>Volte em breve para conferir nossas promoções!</p>
+            </div>`;
+    }
+
+    // 8. Mostrar container e rolar para ele
+    elements.offersContainer.style.display = 'block';
+    elements.offersContainer.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Função auxiliar para criar cards de oferta
+function createOfferCard(offer, modal) {
+    const offerCard = document.createElement('div');
+    offerCard.className = 'offer-card';
+    
+    offerCard.innerHTML = `
+        <div class="offer-images-preview">
+            ${offer.encartes.slice(0, 3).map(img => `
+                <img src="${img}" alt="Preview" class="encarte-preview"
+                     onerror="this.style.display='none'">
+            `).join('')}
+            ${offer.encartes.length > 3 ? 
+               `<div class="more-images">+${offer.encartes.length - 3}</div>` : ''}
+        </div>
+        <div class="offer-info">
+            <h3 class="offer-name">${offer.title}</h3>
+            <p class="offer-valid">Visível a partir das 19h do dia ${getPreviousDayFormatted(offer.startDate)} até ${formatDate(offer.endDate)}</p>
+            <div class="offer-btn ver-encarte">Ver Encarte Completo</div>
+        </div>
+    `;
+
+    // Adicionar eventos
+    const openModal = () => showGalleryModal(modal, offer);
+    offerCard.querySelectorAll('.encarte-preview, .ver-encarte').forEach(el => {
+        el.addEventListener('click', openModal);
+    });
+
+    return offerCard;
+}
+
+// Função para mostrar o modal da galeria
+function showGalleryModal(modal, offer) {
+    modal.innerHTML = `
+        <span class="close-modal">&times;</span>
+        <h3 class="modal-title">${offer.title}</h3>
+        <div class="encarte-gallery">
+            ${offer.encartes.map(img => `
+                <img src="${img}" class="gallery-image" 
+                     alt="Encarte ${offer.title}"
+                     onerror="this.src='https://i.imgur.com/XFZQZ3Q.png'">
+            `).join('')}
+        </div>
+        <div class="gallery-nav">
+            <button class="prev-btn">❮ Anterior</button>
+            <button class="next-btn">Próximo ❯</button>
+        </div>
+    `;
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    
+    // Configurar eventos do modal
+    modal.querySelector('.close-modal').addEventListener('click', () => {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+    
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    // Inicializar navegação
+    initGalleryNavigation(modal);
+}
+
+// Função para navegação na galeria
+function initGalleryNavigation(modal) {
+    const gallery = modal.querySelector('.encarte-gallery');
+    const images = modal.querySelectorAll('.gallery-image');
+    let currentIndex = 0;
+    
+    const prevBtn = modal.querySelector('.prev-btn');
+    const nextBtn = modal.querySelector('.next-btn');
+    
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                gallery.scrollTo({
+                    left: images[currentIndex].offsetLeft - gallery.offsetLeft,
+                    behavior: 'smooth'
+                });
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < images.length - 1) {
+                currentIndex++;
+                gallery.scrollTo({
+                    left: images[currentIndex].offsetLeft - gallery.offsetLeft,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
+}
         
         // Mostra mensagem inicial
         showSelectionMessage();
