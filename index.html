@@ -38,6 +38,7 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background: url('https://i.imgur.com/XFZQZ3Q.png') repeat;
             opacity: 0.1;
             z-index: -1;
         }
@@ -376,7 +377,7 @@
         </div>
         
         <div id="offers-container" class="offers-container">
-            <h2 class="offers-title" id="offers-title">Aproveite para comprar barato <span id="city-span"></span> - <span id="category-span"></span> 🔥</h2>
+            <h2 class="offers-title" id="offers-title">Aproveite para comprar barato 🔥</h2>
             <div class="offers-grid" id="offers-grid">
                 <div class="no-selection">
                     <h3>Selecione uma cidade e uma categoria para ver as ofertas</h3>
@@ -386,8 +387,8 @@
         </div>
         
         <div class="social-links">
-            <a href="https://www.facebook.com/lojaspontomax/?locale=pt_BR" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/grupopontomax/" class="social-link instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link instagram"><i class="fab fa-instagram"></i></a>
             <a href="#" class="social-link whatsapp"><i class="fab fa-whatsapp"></i></a>
         </div>
     </div>
@@ -412,16 +413,22 @@
             balsas: {
                 mercado: [
                     {
-                        img: "https://i.postimg.cc/90My2CSC/semanal.jpg", "https://i.imgur.com/ZkPIkeh.jpeg", "https://i.imgur.com/uosDOZH.jpeg",
-                        title: "Ofertas da Semana",
-                        startDate: "28/04/2025",
-                        endDate: "01/05/2025"
+                        img: "https://i.imgur.com/JqYeZ0x.jpg",
+                        title: "Oferta da Semana",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
                     },
                     {
-                        img: "https://i.imgur.com/lyEayeu.jpeg",
-                        title: "Festival do bebê",
-                        startDate: "28/04/2025",
-                        endDate: "02/05/2025"
+                        img: "https://i.imgur.com/p3z1vQj.jpg",
+                        title: "Carnes Especiais",
+                        startDate: "15/06/2023",
+                        endDate: "28/06/2023"
+                    },
+                    {
+                        img: "https://i.imgur.com/5QzZQZ3.jpg",
+                        title: "Promoção de Laticínios",
+                        startDate: "25/06/2023",
+                        endDate: "01/07/2023"
                     }
                 ],
                 bazar: [
@@ -464,34 +471,22 @@
             fortaleza: {
                 mercado: [
                     {
-                        img: "https://i.imgur.com/vh4B5gU.jpeg",
-                        title: "Oferta da Semana",
-                        startDate: "28/04/2025",
-                        endDate: "01/05/2025"
+                        img: "https://i.imgur.com/5QzZQZ3.jpg",
+                        title: "Super Ofertas de Alimentos",
+                        startDate: "20/06/2023",
+                        endDate: "02/07/2023"
                     },
                     {
-                        img: "https://i.imgur.com/ZkPIkeh.jpeg",
-                        title: "Oferta da Semana",
-                        startDate: "28/04/2025",
-                        endDate: "01/05/2025"
+                        img: "https://i.imgur.com/JqYeZ0x.jpg",
+                        title: "Promoção de Hortifruti",
+                        startDate: "15/06/2023",
+                        endDate: "28/06/2023"
                     },
                     {
-                        img: "https://i.imgur.com/uosDOZH.jpeg",
-                        title: "Oferta da Semana",
-                        startDate: "28/04/2025",
-                        endDate: "01/05/2025"
-                    },
-                    {
-                        img: "https://i.imgur.com/5LNbLyZ.jpeg",
-                        title: "Oferta da Semana",
-                        startDate: "28/04/2025",
-                        endDate: "01/05/2025"
-                    },
-                    {
-                        img: "https://i.imgur.com/lyEayeu.jpeg",
-                        title: "Festival do bebê",
-                        startDate: "28/04/2025",
-                        endDate: "02/05/2025"
+                        img: "https://i.imgur.com/p3z1vQj.jpg",
+                        title: "Descontos em Bebidas",
+                        startDate: "20/06/2023",
+                        endDate: "30/06/2023"
                     }
                 ],
                 bazar: [
@@ -609,43 +604,18 @@
         
         // Função para verificar se a oferta está válida
         function isOfferValid(startDateStr, endDateStr) {
-    const now = new Date(); // Data e hora atuais
-    
-    // Converte a data de início para objeto Date
-    const [startDay, startMonth, startYear] = startDateStr.split('/');
-    const startDate = new Date(startYear, startMonth - 1, startDay);
-    
-    // Ajusta para ficar visível a partir das 19h do dia anterior
-    startDate.setDate(startDate.getDate() - 1); // Dia anterior
-    startDate.setHours(19, 0, 0, 0); // 19:00h
-    
-    // Converte a data de término para objeto Date
-    const [endDay, endMonth, endYear] = endDateStr.split('/');
-    const endDate = new Date(endYear, endMonth - 1, endDay);
-    endDate.setHours(23, 59, 59, 999); // Até o final do dia
-    
-    return now >= startDate && now <= endDate;
-}
-
-
-        // Função para formatar datas corretamente (DD/MM/AAAA)
-function formatDate(dateString) {
-    // Converte a string de data para objeto Date
-    const [day, month, year] = dateString.split('/');
-    const date = new Date(year, month - 1, day); // mês é 0-indexed
-    
-    // Ajuste para o fuso horário do Brasil (UTC-3)
-    date.setHours(date.getHours() + 3);
-    
-    // Formatação garantindo 2 dígitos
-    const formattedDay = date.getDate().toString().padStart(2, '0');
-    const formattedMonth = (date.getMonth() + 1).toString().padStart(2, '0');
-    const formattedYear = date.getFullYear();
-    
-    return `${formattedDay}/${formattedMonth}/${formattedYear}`;
-}
-
-        
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            const [startDay, startMonth, startYear] = startDateStr.split('/');
+            const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
+            
+            const [endDay, endMonth, endYear] = endDateStr.split('/');
+            const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
+            endDate.setHours(23, 59, 59, 999);
+            
+            return today >= startDate && today <= endDate;
+        }
         
         // Função para mostrar as ofertas
         function showOffers() {
@@ -674,8 +644,8 @@ function formatDate(dateString) {
                     offerCard.className = 'offer-card';
                     
                     // Formata as datas para exibição
-                    const startDate = offer.startDate; // Já está no formato DD/MM/AAAA
-                    const endDate = offer.endDate;     
+                    const startDate = new Date(offer.startDate.split('/').reverse().join('-'));
+                    const endDate = new Date(offer.endDate.split('/').reverse().join('-'));
                     
                     offerCard.innerHTML = `
                         <img src="${offer.img}" alt="${offer.title}" class="offer-img">
