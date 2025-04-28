@@ -621,19 +621,23 @@
         
         // Função para verificar se a oferta está válida
         function isOfferValid(startDateStr, endDateStr) {
-               const today = new Date();
-               today.setHours(0, 0, 0, 0);
+    const now = new Date(); // Data e hora atuais
     
-              // Converte datas no formato DD/MM/AAAA
-              const [startDay, startMonth, startYear] = startDateStr.split('/');
-              const startDate = new Date(`${startYear}-${startMonth}-${startDay}`);
+    // Converte a data de início para objeto Date
+    const [startDay, startMonth, startYear] = startDateStr.split('/');
+    const startDate = new Date(startYear, startMonth - 1, startDay);
     
-              const [endDay, endMonth, endYear] = endDateStr.split('/');
-              const endDate = new Date(`${endYear}-${endMonth}-${endDay}`);
-              endDate.setHours(23, 59, 59, 999);  // Fim do dia
+    // Ajusta para ficar visível a partir das 19h do dia anterior
+    startDate.setDate(startDate.getDate() - 1); // Dia anterior
+    startDate.setHours(19, 0, 0, 0); // 19:00h
     
-              return today >= startDate && today <= endDate;
-        }
+    // Converte a data de término para objeto Date
+    const [endDay, endMonth, endYear] = endDateStr.split('/');
+    const endDate = new Date(endYear, endMonth - 1, endDay);
+    endDate.setHours(23, 59, 59, 999); // Até o final do dia
+    
+    return now >= startDate && now <= endDate;
+}
 
 
         // Função para formatar datas corretamente (DD/MM/AAAA)
