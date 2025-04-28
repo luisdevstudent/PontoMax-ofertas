@@ -628,6 +628,10 @@
             const offersGrid = document.getElementById('offers-grid');
             
             // Verifica se os elementos existem
+            if (!citySpan || !categorySpan || !offersTitle || !offersGrid) {
+                console.error('Elementos não encontrados! Verifique os IDs no HTML');
+                return;
+            }
             
             }
 
