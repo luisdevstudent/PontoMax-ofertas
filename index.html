@@ -383,324 +383,140 @@
     </div>
 
     <script>
-<<<<<<< HEAD
-        let selectedCity = '';
-        let selectedCategory = '';
-        const HOURS_BEFORE_MIDNIGHT = 5; // Número de horas antes da meia-noite para exibir a oferta
+let selectedCity = '';
+let selectedCategory = '';
+const HOURS_BEFORE_MIDNIGHT = 5; // Número de horas antes da meia-noite para exibir a oferta
 
-        // Função para selecionar a cidade
-        function selectCity(city) {
-            selectedCity = city;
-=======
-        // Função para formatar datas
-        function formatDate(dateStr) {
-            const [day, month, year] = dateStr.split('/');
-            const date = new Date(year, month - 1, day);
-            date.setHours(date.getHours() + 3); // Ajuste para horário de Brasília
-            
-            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
-        }
+// Função para selecionar a cidade
+function selectCity(city) {
+    selectedCity = city;
+
+    // Remove a classe 'selected' dos outros botões de cidade
+    document.querySelectorAll('.city').forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    // Adiciona a classe 'selected' ao botão clicado
+    document.getElementById(city).classList.add('selected');
+    
+    updateOffers();
+}
+
+// Função para selecionar a categoria
+function selectCategory(category) {
+    selectedCategory = category;
+
+    // Remove a classe 'selected' dos outros botões de categoria
+    document.querySelectorAll('.category').forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    // Adiciona a classe 'selected' ao botão clicado
+    document.getElementById(category).classList.add('selected');
+
+    updateOffers();
+}
+
+// Função para atualizar as ofertas exibidas com base na cidade e categoria selecionadas
+function updateOffers() {
+  if (selectedCity && selectedCategory) {
+    const offerImages = document.getElementById('offer-images');
+    offerImages.innerHTML = '';
+    const offers = {
         
-        // Função para obter o dia anterior formatado
-        function getPreviousDayFormatted(dateStr) {
-            const [day, month, year] = dateStr.split('/');
-            const date = new Date(year, month - 1, day);
-            date.setDate(date.getDate() - 1);
-            return formatDate(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`);
-        }
-        
-        // Dados das ofertas com datas de validade
-        const offersData = {
             balsas: {
-                mercado: [
-                    {
-                        title: "Oferta da Semana - Alimentos",
-                        startDate: "28/04/2025",
-                        endDate: "01/05/2025",
-                        encartes: [
-                            "https://i.imgur.com/JqYeZ0x.jpg",
-                            "https://i.imgur.com/p3z1vQj.jpg",
-                            "https://i.imgur.com/5QzZQZ3.jpg"
-                        ]
-                    }
+                supermercado: [
+                    { url: 'https://i.imgur.com/vh4B5gU.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
+                    { url: 'https://i.imgur.com/ZkPIkeh.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
+                    { url: 'https://i.imgur.com/uosDOZH.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
+                    { url: 'https://i.imgur.com/lyEayeu.jpeg', startDate: '2025-04-28', endDate: '2025-05-03' },
+
+                    
+                    { url: 'https://i.imgur.com/rnrOYdN.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' },
+                    { url: 'https://i.imgur.com/7S8RTmG.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' }
+
                 ],
+                
                 bazar: [
-                    {
-                        title: "Promoção de Cama, Mesa e Banho",
-                        startDate: "28/04/2025",
-                        endDate: "05/05/2025",
-                        encartes: [
-                            "https://i.imgur.com/XFZQZ3Q.jpg",
-                            "https://i.imgur.com/JqYeZ0x.jpg"
-                        ]
-                    }
+                    { url: '', startDate: '2025-04-14', endDate: '2025-04-19' }
+                ],
+                
+                eletro: [
+                    { url: 'https://i.imgur.com/XkVpNTb.jpeg', link: '', startDate: '2025-04-26', endDate: '2025-04-28' },
+                    { url: 'https://i.imgur.com/9SJgSzb.jpeg', link: '', startDate: '2025-04-23', endDate: '2025-04-28' },
+                    
+                    { url: 'https://i.imgur.com/ejI3CEG.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/eh0xXLy.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/C3Q4d3X.jpeg', startDate: '2025-04-21', endDate: '2025-04-26' }
+                ],
+
+                site: [
+                    { url: 'https://i.imgur.com/sJ51khJ.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
+                    { url: 'https://i.imgur.com/u87FLeg.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
+                    { url: 'https://i.imgur.com/fen3kR2.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/tLjz1EK.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/riiqeCB.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-55-aiwa-4k-aws-android/', startDate: '2025-04-01', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/uZ3bvsj.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-lg-50-4k-uhd-50ut8050psa-processador-a5-ger7-ai/', startDate: '2025-04-01', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/BuDsQ3n.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-aiwa-43-android-full-hd-comando-de-voz1/', startDate: '2025-04-01', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/b2cIwrp.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-42-aoc-led-roku-wifi-full-hd-usb-hdmi-42s5045-78/', startDate: '2025-04-01', endDate: '2025-05-01' }
                 ]
             },
             fortaleza: {
-                mercado: [
-                    {
-                        title: "Super Ofertas de Alimentos",
-                        startDate: "28/04/2025",
-                        endDate: "04/05/2025",
-                        encartes: [
-                            "https://i.imgur.com/5QzZQZ3.jpg",
-                            "https://i.imgur.com/JqYeZ0x.jpg"
-                        ]
-                    }
+                supermercado: [
+                    { url: 'https://i.imgur.com/vh4B5gU.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
+                    { url: 'https://i.imgur.com/ZkPIkeh.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
+                    { url: 'https://i.imgur.com/uosDOZH.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
+                    { url: 'https://i.imgur.com/5LNbLyZ.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
+                    { url: 'https://i.imgur.com/lyEayeu.jpeg', startDate: '2025-04-28', endDate: '2025-05-03' },
+
+                    
+                    { url: 'https://i.imgur.com/rnrOYdN.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' },
+                    { url: 'https://i.imgur.com/7S8RTmG.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' }
+                ],
+                bazar: [
+                    { url: '', startDate: '2025-04-14', endDate: '2025-04-19' }
+                ],
+                eletro: [
+                    { url: 'https://i.imgur.com/XkVpNTb.jpeg', link: '', startDate: '2025-04-26', endDate: '2025-04-28' },
+                    { url: 'https://i.imgur.com/9SJgSzb.jpeg', link: '', startDate: '2025-04-23', endDate: '2025-04-28' },
+                    { url: 'https://i.imgur.com/ejI3CEG.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/eh0xXLy.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/C3Q4d3X.jpeg', startDate: '2025-04-21', endDate: '2025-04-26' }
+                ],
+
+                site: [
+                    { url: 'https://i.imgur.com/sJ51khJ.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
+                    { url: 'https://i.imgur.com/u87FLeg.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
+                    { url: 'https://i.imgur.com/fen3kR2.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/tLjz1EK.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/riiqeCB.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-55-aiwa-4k-aws-android/', startDate: '2025-04-01', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/uZ3bvsj.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-lg-50-4k-uhd-50ut8050psa-processador-a5-ger7-ai/', startDate: '2025-04-01', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/BuDsQ3n.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-aiwa-43-android-full-hd-comando-de-voz1/', startDate: '2025-04-01', endDate: '2025-05-01' },
+                    { url: 'https://i.imgur.com/b2cIwrp.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-42-aoc-led-roku-wifi-full-hd-usb-hdmi-42s5045-78/', startDate: '2025-04-01', endDate: '2025-05-01' }
                 ]
             }
         };
-        
-        // Elementos do DOM
-        const cityButtons = document.querySelectorAll('.btn-city');
-        const categoryButtons = document.querySelectorAll('.btn-category');
-        const offersContainer = document.getElementById('offers-container');
-        const offersTitle = document.getElementById('offers-title');
-        const categorySpan = document.getElementById('category-span');
-        const offersGrid = document.getElementById('offers-grid');
-        const modal = document.getElementById('offer-modal');
-        
-        // Variáveis de estado
-        let selectedCity = null;
-        let selectedCategory = null;
-        
-        // Event listeners para os botões de cidade
-        cityButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                cityButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                selectedCity = button.dataset.city;
-                
-                if (!selectedCategory) {
-                    showSelectionMessage();
-                    return;
-                }
-                
-                showOffers();
-            });
-        });
-        
-        // Event listeners para os botões de categoria
-        categoryButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                categoryButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                selectedCategory = button.dataset.category;
-                
-                if (!selectedCity) {
-                    showSelectionMessage();
-                    return;
-                }
-                
-                showOffers();
-            });
-        });
 
-        // Função para mostrar mensagem de seleção necessária
-        function showSelectionMessage() {
-            offersContainer.style.display = 'block';
-            offersGrid.innerHTML = `
-                <div class="no-selection">
-                    <h3>${!selectedCity && !selectedCategory 
-                        ? 'Selecione uma cidade e uma categoria para ver as ofertas' 
-                        : !selectedCity 
-                            ? 'Selecione uma cidade para ver as ofertas' 
-                            : 'Selecione uma categoria para ver as ofertas'}</h3>
-                    <p>Escolha nos menus acima para visualizar nossas promoções</p>
-                </div>
-            `;
-            offersTitle.textContent = "Aproveite para comprar barato 🔥!";
-        }
-        
-        // Função para verificar se a oferta está válida
-        function isOfferValid(startDateStr, endDateStr) {
-            const now = new Date();
-            
-            // Converte a data de início para objeto Date
-            const [startDay, startMonth, startYear] = startDateStr.split('/');
-            const startDate = new Date(startYear, startMonth - 1, startDay);
-            
-            // Ajusta para ficar visível a partir das 19h do dia anterior
-            startDate.setDate(startDate.getDate() - 1);
-            startDate.setHours(19, 0, 0, 0);
-            
-            // Converte a data de término para objeto Date
-            const [endDay, endMonth, endYear] = endDateStr.split('/');
-            const endDate = new Date(endYear, endMonth - 1, endDay);
-            endDate.setHours(23, 59, 59, 999);
-            
-            return now >= startDate && now <= endDate;
-        }
-        
-        // Função para inicializar navegação da galeria
-        function initGalleryNavigation(images) {
-            let currentIndex = 0;
-            const gallery = document.querySelector('.encarte-gallery');
-            
-            document.querySelector('.prev-btn')?.addEventListener('click', () => {
-                if (currentIndex > 0) {
-                    currentIndex--;
-                    gallery.scrollTo({
-                        left: images[currentIndex].offsetLeft - gallery.offsetLeft,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-            
-            document.querySelector('.next-btn')?.addEventListener('click', () => {
-                if (currentIndex < images.length - 1) {
-                    currentIndex++;
-                    gallery.scrollTo({
-                        left: images[currentIndex].offsetLeft - gallery.offsetLeft,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        }
-        
-        // Função para mostrar as ofertas
-        function showOffers() {
-            // Elementos do DOM
-            const citySpan = document.getElementById('city-span');
-            const categorySpan = document.getElementById('category-span');
-            const offersTitle = document.getElementById('offers-title');
-            const offersGrid = document.getElementById('offers-grid');
-            
-            // Verifica se os elementos existem
-            if (!citySpan || !categorySpan || !offersTitle || !offersGrid) {
-                console.error('Elementos não encontrados! Verifique os IDs no HTML');
-                return;
-            }
-            
-            }
->>>>>>> 15acd92cb5a6e2e1c37c32c560eb8e41f404e39b
-
-            // Remove a classe 'selected' dos outros botões de cidade
-            document.querySelectorAll('.city').forEach(button => {
-                button.classList.remove('selected');
-            });
-
-            // Adiciona a classe 'selected' ao botão clicado
-            document.getElementById(city).classList.add('selected');
-
-            updateOffers();
-        }
-
-        // Função para selecionar a categoria
-        function selectCategory(category) {
-            selectedCategory = category;
-
-            // Remove a classe 'selected' dos outros botões de categoria
-            document.querySelectorAll('.category').forEach(button => {
-                button.classList.remove('selected');
-            });
-
-            // Adiciona a classe 'selected' ao botão clicado
-            document.getElementById(category).classList.add('selected');
-
-            updateOffers();
-        }
-
-        // Função para atualizar as ofertas exibidas com base na cidade e categoria selecionadas
-        function updateOffers() {
-            if (selectedCity && selectedCategory) {
-                const offerImages = document.getElementById('offer-images');
-                offerImages.innerHTML = '';
-                const offers = {
-
-                    balsas: {
-                        supermercado: [
-                            { url: 'https://i.imgur.com/vh4B5gU.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
-                            { url: 'https://i.imgur.com/ZkPIkeh.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
-                            { url: 'https://i.imgur.com/uosDOZH.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
-                            { url: 'https://i.imgur.com/lyEayeu.jpeg', startDate: '2025-04-28', endDate: '2025-05-03' },
-
-
-                            { url: 'https://i.imgur.com/rnrOYdN.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' },
-                            { url: 'https://i.imgur.com/7S8RTmG.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' }
-
-                        ],
-
-                        bazar: [
-                            { url: '', startDate: '2025-04-14', endDate: '2025-04-19' }
-                        ],
-
-                        eletro: [
-                            { url: 'https://i.imgur.com/XkVpNTb.jpeg', link: '', startDate: '2025-04-26', endDate: '2025-04-28' },
-                            { url: 'https://i.imgur.com/9SJgSzb.jpeg', link: '', startDate: '2025-04-23', endDate: '2025-04-28' },
-
-                            { url: 'https://i.imgur.com/ejI3CEG.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/eh0xXLy.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/C3Q4d3X.jpeg', startDate: '2025-04-21', endDate: '2025-04-26' }
-                        ],
-
-                        site: [
-                            { url: 'https://i.imgur.com/sJ51khJ.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
-                            { url: 'https://i.imgur.com/u87FLeg.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
-                            { url: 'https://i.imgur.com/fen3kR2.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/tLjz1EK.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/riiqeCB.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-55-aiwa-4k-aws-android/', startDate: '2025-04-01', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/uZ3bvsj.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-lg-50-4k-uhd-50ut8050psa-processador-a5-ger7-ai/', startDate: '2025-04-01', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/BuDsQ3n.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-aiwa-43-android-full-hd-comando-de-voz1/', startDate: '2025-04-01', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/b2cIwrp.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-42-aoc-led-roku-wifi-full-hd-usb-hdmi-42s5045-78/', startDate: '2025-04-01', endDate: '2025-05-01' }
-                        ]
-                    },
-                    fortaleza: {
-                        supermercado: [
-                            { url: 'https://i.imgur.com/vh4B5gU.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
-                            { url: 'https://i.imgur.com/ZkPIkeh.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
-                            { url: 'https://i.imgur.com/uosDOZH.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
-                            { url: 'https://i.imgur.com/5LNbLyZ.jpeg', startDate: '2025-04-28', endDate: '2025-05-02' },
-                            { url: 'https://i.imgur.com/lyEayeu.jpeg', startDate: '2025-04-28', endDate: '2025-05-03' },
-
-
-                            { url: 'https://i.imgur.com/rnrOYdN.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' },
-                            { url: 'https://i.imgur.com/7S8RTmG.jpeg', startDate: '2025-04-25', endDate: '2025-04-30' }
-                        ],
-                        bazar: [
-                            { url: '', startDate: '2025-04-14', endDate: '2025-04-19' }
-                        ],
-                        eletro: [
-                            { url: 'https://i.imgur.com/XkVpNTb.jpeg', link: '', startDate: '2025-04-26', endDate: '2025-04-28' },
-                            { url: 'https://i.imgur.com/9SJgSzb.jpeg', link: '', startDate: '2025-04-23', endDate: '2025-04-28' },
-                            { url: 'https://i.imgur.com/ejI3CEG.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/eh0xXLy.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-23', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/C3Q4d3X.jpeg', startDate: '2025-04-21', endDate: '2025-04-26' }
-                        ],
-
-                        site: [
-                            { url: 'https://i.imgur.com/sJ51khJ.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
-                            { url: 'https://i.imgur.com/u87FLeg.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-26', endDate: '2025-04-28' },
-                            { url: 'https://i.imgur.com/fen3kR2.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/tLjz1EK.jpeg', link: 'https://pontomaxonline.com.br/', startDate: '2025-04-19', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/riiqeCB.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-55-aiwa-4k-aws-android/', startDate: '2025-04-01', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/uZ3bvsj.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-lg-50-4k-uhd-50ut8050psa-processador-a5-ger7-ai/', startDate: '2025-04-01', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/BuDsQ3n.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-aiwa-43-android-full-hd-comando-de-voz1/', startDate: '2025-04-01', endDate: '2025-05-01' },
-                            { url: 'https://i.imgur.com/b2cIwrp.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/smart-tv-42-aoc-led-roku-wifi-full-hd-usb-hdmi-42s5045-78/', startDate: '2025-04-01', endDate: '2025-05-01' }
-                        ]
-                    }
-                };
-
-                const now = new Date();
-                const selectedOffers = offers[selectedCity][selectedCategory];
-                selectedOffers.forEach(offer => {
-                    const offerStart = new Date(offer.startDate);
-                    const offerEnd = new Date(offer.endDate);
-                    const previousDayBeforeMidnight = new Date(offerStart);
-                    previousDayBeforeMidnight.setDate(offerStart.getDate());
-                    previousDayBeforeMidnight.setHours(24 - HOURS_BEFORE_MIDNIGHT, 0, 0);
-                    if (now >= previousDayBeforeMidnight && now <= offerEnd) {
-                        const a = document.createElement('a');
-                        a.href = offer.link;
-                        a.target = '_blank';  // Abre o link em uma nova aba
-                        const img = document.createElement('img');
-                        img.src = offer.url;
-                        a.appendChild(img);
-                        offerImages.appendChild(a);
-                    }
-                });
-            }
-        }
+        const now = new Date();
+    const selectedOffers = offers[selectedCity][selectedCategory];
+    selectedOffers.forEach(offer => {
+      const offerStart = new Date(offer.startDate);
+      const offerEnd = new Date(offer.endDate);
+      const previousDayBeforeMidnight = new Date(offerStart);
+      previousDayBeforeMidnight.setDate(offerStart.getDate());
+      previousDayBeforeMidnight.setHours(24 - HOURS_BEFORE_MIDNIGHT, 0, 0);
+      if (now >= previousDayBeforeMidnight && now <= offerEnd) {
+        const a = document.createElement('a');
+        a.href = offer.link;
+        a.target = '_blank';  // Abre o link em uma nova aba
+        const img = document.createElement('img');
+        img.src = offer.url;
+        a.appendChild(img);
+        offerImages.appendChild(a);
+      }
+    });
+  }
+}
 
     </script>
 </body>
