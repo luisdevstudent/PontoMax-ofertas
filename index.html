@@ -440,74 +440,51 @@ function updateOffers() {
     const offers = {
         
         balsas: {
-                supermercado: [
-                    { url: 'https://i.imgur.com/qEqiEKI.png', startDate: '2025-06-09', endDate: '2025-06-13' },
-                    { url: 'https://i.imgur.com/u439wrc.png', startDate: '2025-06-09', endDate: '2025-06-13' },
-                    { url: 'https://i.imgur.com/fpnY3U8.png', startDate: '2025-06-09', endDate: '2025-06-13' },
-                    { url: 'https://i.imgur.com/FBWDoWs.jpeg', startDate: '2025-05-30', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/EoWJHJg.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/1IXhOWN.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/srGd8go.png', startDate: '2025-06-09', endDate: '2025-06-16' }
-                ],
-                
-                bazar: [        
-                    { url: 'https://i.imgur.com/FBWDoWs.jpeg', startDate: '2025-05-30', endDate: '2025-06-15' },
-                    { url: 'https://i.imgur.com/1IXhOWN.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/srGd8go.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/EoWJHJg.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/TDUT9ZP.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
-                    { url: 'https://i.imgur.com/if4adJk.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' }
-                ],
-                
-                eletro: [
-                    { url: 'https://i.imgur.com/hb18C8K.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/PBCWYTs.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/l7AF34q.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/Ofv6Nqi.png', startDate: '2025-06-09', endDate: '2025-06-16' }
-                ],
+            supermercado: [
+                { url: 'https://i.imgur.com/TDUT9ZP.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/if4adJk.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/OoRlE4L.png', startDate: '2025-06-16', endDate: '2025-06-19' },
+                { url: 'https://i.imgur.com/kr0Xc8P.png', startDate: '2025-06-16', endDate: '2025-06-19' },
+                { url: 'https://i.imgur.com/8bFL30v.png', startDate: '2025-06-16', endDate: '2025-06-19' },
+                { url: 'https://i.imgur.com/moEEb4S.png', startDate: '2025-06-16', endDate: '2025-06-22' }
+            ],
+            
+            bazar: [        
+                { url: 'https://i.imgur.com/TDUT9ZP.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/if4adJk.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/moEEb4S.png', startDate: '2025-06-16', endDate: '2025-06-22' }
+            ],
+    
+            eletro: [
+                { url: 'https://i.imgur.com/NQKNluu.png', startDate: '2025-06-16', endDate: '2025-06-22' }
+            ],
 
-                site: [
-                    { url: 'https://i.imgur.com/hb18C8K.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/PBCWYTs.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/l7AF34q.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/Ofv6Nqi.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/56nb4ng.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/ar-condicionado-inverter-elgin-piso-teto-36000-btus-frio-eco/', startDate: '2025-05-21', endDate: '2025-06-30' }
-                ]
-            },
-            fortaleza: {
-                supermercado: [
-                    { url: 'https://i.imgur.com/qEqiEKI.png', startDate: '2025-06-09', endDate: '2025-06-13' },
-                    { url: 'https://i.imgur.com/u439wrc.png', startDate: '2025-06-09', endDate: '2025-06-13' },
-                    { url: 'https://i.imgur.com/fpnY3U8.png', startDate: '2025-06-09', endDate: '2025-06-13' },
-                    { url: 'https://i.imgur.com/MqiNMO1.png', startDate: '2025-06-09', endDate: '2025-06-13' },
-                    { url: 'https://i.imgur.com/EoWJHJg.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/FBWDoWs.jpeg', startDate: '2025-05-30', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/1IXhOWN.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/srGd8go.png', startDate: '2025-06-09', endDate: '2025-06-16' }
-                ], 
-                bazar: [
-                    { url: 'https://i.imgur.com/FBWDoWs.jpeg', startDate: '2025-05-30', endDate: '2025-06-15' },
-                    { url: 'https://i.imgur.com/1IXhOWN.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/srGd8go.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/EoWJHJg.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/TDUT9ZP.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
-                    { url: 'https://i.imgur.com/if4adJk.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' }
-                ],
-                eletro: [
-                    { url: 'https://i.imgur.com/hb18C8K.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/PBCWYTs.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/l7AF34q.png', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/Ofv6Nqi.png', startDate: '2025-06-09', endDate: '2025-06-16' }
-                ],    
+            site: [
+                { url: 'https://i.imgur.com/56nb4ng.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/ar-condicionado-inverter-elgin-piso-teto-36000-btus-frio-eco/', startDate: '2025-05-21', endDate: '2025-06-30' }
+            ]
+        },
+        fortaleza: {
+            supermercado: [
+                { url: 'https://i.imgur.com/MqiNMO1.png', startDate: '2025-06-09', endDate: '2025-06-13' },
+                { url: 'https://i.imgur.com/TDUT9ZP.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/if4adJk.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/OoRlE4L.png', startDate: '2025-06-16', endDate: '2025-06-19' },
+                { url: 'https://i.imgur.com/kr0Xc8P.png', startDate: '2025-06-16', endDate: '2025-06-19' },
+                { url: 'https://i.imgur.com/8bFL30v.png', startDate: '2025-06-16', endDate: '2025-06-19' },
+                { url: 'https://i.imgur.com/moEEb4S.png', startDate: '2025-06-16', endDate: '2025-06-22' }
+            ], 
+            bazar: [
+                { url: 'https://i.imgur.com/TDUT9ZP.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/if4adJk.jpeg', startDate: '2025-06-02', endDate: '2025-07-02' },
+                { url: 'https://i.imgur.com/moEEb4S.png', startDate: '2025-06-16', endDate: '2025-06-22' }
+            ],
+            eletro: [
+                { url: 'https://i.imgur.com/NQKNluu.png', startDate: '2025-06-16', endDate: '2025-06-22' }
+            ],    
 
-                site: [
-                    { url: 'https://i.imgur.com/hb18C8K.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/PBCWYTs.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/l7AF34q.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/Ofv6Nqi.png', link: 'https://pontomaxonline.com.br/', startDate: '2025-06-09', endDate: '2025-06-16' },
-                    { url: 'https://i.imgur.com/56nb4ng.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/ar-condicionado-inverter-elgin-piso-teto-36000-btus-frio-eco/', startDate: '2025-05-21', endDate: '2025-06-30' }
-                ]
-            }
+            site: [
+                { url: 'https://i.imgur.com/56nb4ng.jpeg', link: 'https://www.pontomaxonline.com.br/produtos/ar-condicionado-inverter-elgin-piso-teto-36000-btus-frio-eco/', startDate: '2025-05-21', endDate: '2025-06-30' }
+            ]
         };
 
         const now = new Date();
