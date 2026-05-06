@@ -440,108 +440,73 @@ function updateOffers() {
     const offerImages = document.getElementById('offer-images');
     offerImages.innerHTML = '';
     const offers = {
+    balsas: {
+        supermercado: [
+            { url: 'https://i.imgur.com/X8pBmOl.png', startDate: '2026-05-06', endDate: '2026-05-07' }
+        ],
         
-        balsas: {
-            supermercado: [
-                { url: 'https://i.imgur.com/u59vr8h.jpeg', startDate: '2026-05-01', endDate: '2026-05-04' },
-                { url: 'https://i.imgur.com/vu2oDRJ.jpeg', startDate: '2026-05-01', endDate: '2026-05-04' },
-                { url: 'https://i.imgur.com/s3jEBys.jpeg', startDate: '2026-05-01', endDate: '2026-05-04' },
-                { url: 'https://i.imgur.com/2SCZ8pc.jpeg', startDate: '2026-04-25', endDate: '2026-05-01' },
-                
-                { url: 'https://i.imgur.com/rnANkT9.jpeg', startDate: '2026-04-30', endDate: '2026-05-03' },
-                { url: 'https://i.imgur.com/bXzGl39.jpeg', startDate: '2026-04-30', endDate: '2026-05-03' },
-                { url: 'https://i.imgur.com/r9X0pNY.jpeg', startDate: '2026-04-30', endDate: '2026-05-03' }
-            ],
-            
-            bazar: [
-                { url: 'https://i.imgur.com/xI93NSW.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/hJQUWwD.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/Efd2SjU.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/ySw9M1z.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-            ],
-    
-            eletro: [
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                
-                { url: 'https://i.imgur.com/NmIWsCb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/cgAVFif.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/IEdNebJ.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                
-                { url: 'https://i.imgur.com/fpxrZlB.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/D3Z8Mxn.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/BgMqUik.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' }
+        bazar: [
+            { url: 'https://i.imgur.com/xI93NSW.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
+            { url: 'https://i.imgur.com/hJQUWwD.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
+            { url: 'https://i.imgur.com/Efd2SjU.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
+            { url: 'https://i.imgur.com/ySw9M1z.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' }
+        ],
 
-            ],
+        eletro: [
+            { url: 'https://i.imgur.com/ffvIOPF.png', startDate: '2026-05-06', endDate: '2026-05-10' },
+            { url: 'https://i.imgur.com/rOCYGwn.png', startDate: '2026-05-06', endDate: '2026-05-10' },
 
-            site: [
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                
-                { url: 'https://i.imgur.com/NmIWsCb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/cgAVFif.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/IEdNebJ.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                
-                { url: 'https://i.imgur.com/fpxrZlB.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/D3Z8Mxn.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/BgMqUik.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' }
-            ]
-        },
-        fortaleza: {
-            supermercado: [
-                { url: 'https://i.imgur.com/u59vr8h.jpeg', startDate: '2026-05-01', endDate: '2026-05-04' },
-                { url: 'https://i.imgur.com/aZ04LyI.jpeg', startDate: '2026-05-01', endDate: '2026-05-04' },
-                { url: 'https://i.imgur.com/2SCZ8pc.jpeg', startDate: '2026-04-25', endDate: '2026-05-01' },
-                
-                { url: 'https://i.imgur.com/rnANkT9.jpeg', startDate: '2026-04-30', endDate: '2026-05-03' },
-                { url: 'https://i.imgur.com/bXzGl39.jpeg', startDate: '2026-04-30', endDate: '2026-05-03' },
-                { url: 'https://i.imgur.com/r9X0pNY.jpeg', startDate: '2026-04-30', endDate: '2026-05-03' },
-                { url: 'https://i.imgur.com/n3V5CGn.jpeg', startDate: '2026-04-30', endDate: '2026-05-03' }
-            ],
-            
-            bazar: [
-                { url: 'https://i.imgur.com/YRaurrw.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' }
-            ],
-    
-            eletro: [
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                
-                { url: 'https://i.imgur.com/NmIWsCb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/cgAVFif.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/IEdNebJ.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                
-                { url: 'https://i.imgur.com/fpxrZlB.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/D3Z8Mxn.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/BgMqUik.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' }
-            ],
+            { url: 'https://i.imgur.com/FYH9anb.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/lvJhsbs.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/KCh1zCD.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Io1EyRr.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Q74h8r8.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' }
+        ],
 
-            site: [
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                
-                { url: 'https://i.imgur.com/NmIWsCb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/cgAVFif.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                { url: 'https://i.imgur.com/IEdNebJ.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-29', endDate: '2026-05-01' },
-                
-                { url: 'https://i.imgur.com/fpxrZlB.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/D3Z8Mxn.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' },
-                { url: 'https://i.imgur.com/BgMqUik.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-04-27', endDate: '2026-04-30' }
-            ]
-        }
-    };
+        site: [
+            { url: 'https://i.imgur.com/ffvIOPF.png', startDate: '2026-05-06', endDate: '2026-05-10' },
+            { url: 'https://i.imgur.com/rOCYGwn.png', startDate: '2026-05-06', endDate: '2026-05-10' },
+
+            { url: 'https://i.imgur.com/FYH9anb.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/lvJhsbs.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/KCh1zCD.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Io1EyRr.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Q74h8r8.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' }
+        ]
+    },
+
+    fortaleza: {
+        supermercado: [
+            { url: 'https://i.imgur.com/X8pBmOl.png', startDate: '2026-05-06', endDate: '2026-05-07' }
+        ],
+        
+        bazar: [
+            { url: 'https://i.imgur.com/YRaurrw.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' }
+        ],
+
+        eletro: [
+            { url: 'https://i.imgur.com/ffvIOPF.png', startDate: '2026-05-06', endDate: '2026-05-10' },
+            { url: 'https://i.imgur.com/rOCYGwn.png', startDate: '2026-05-06', endDate: '2026-05-10' },
+
+            { url: 'https://i.imgur.com/FYH9anb.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/lvJhsbs.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/KCh1zCD.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Io1EyRr.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Q74h8r8.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' }
+        ],
+
+        site: [
+            { url: 'https://i.imgur.com/ffvIOPF.png', startDate: '2026-05-06', endDate: '2026-05-10' },
+            { url: 'https://i.imgur.com/rOCYGwn.png', startDate: '2026-05-06', endDate: '2026-05-10' },
+
+            { url: 'https://i.imgur.com/FYH9anb.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/lvJhsbs.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/KCh1zCD.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Io1EyRr.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' },
+            { url: 'https://i.imgur.com/Q74h8r8.jpeg', startDate: '2026-05-01', endDate: '2026-05-12' }
+        ]
+    }
+};
 
         const now = new Date();
     const selectedOffers = offers[selectedCity][selectedCategory];
