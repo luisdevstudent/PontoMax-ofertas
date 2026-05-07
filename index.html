@@ -1,372 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="shortcut icon" href="logo-ponto.png" type="image/x-icon">
     <title>Ofertas PontoMax</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        :root {
-            --primary: #FF6B6B;
-            --secondary: #FF6B6B;
-            --dark: #292F36;
-            --light: #F7FFF7;
-            --accent: #FFE66D;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-decoration: none;
-            -webkit-tap-highlight-color: transparent;
-            outline: none;
-        }
-
-        body {
-            background: linear-gradient(135deg, #2b0000 0%, #b30000 50%, #ff1a1a 100%);
-            color: var(--light);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            padding: 30px 0;
-            position: relative;
-        }
-
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .logo-img {
-            max-width: 300px;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .tag-line {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-
-        .selection-panel {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .selection-title {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
-
-        .city-buttons, .category-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 4px 6px 6px rgba(0, 0, 0, 0.1);
-            width: 250px;
-        }
-
-        .city {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            width: 300px;
-        }
-
-        .city:hover, .city.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .category {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .category:hover, .category.active {
-            background: var(--secondary);
-            border-color: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .offers-container {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
+        :root { --primary: #FF6B6B; --secondary: #FF6B6B; --dark: #292F36; --light: #F7FFF7; --accent: #FFE66D; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-decoration: none; -webkit-tap-highlight-color: transparent; outline: none; }
+        body { background: linear-gradient(135deg, #2b0000 0%, #b30000 50%, #ff1a1a 100%); color: var(--light); min-height: 100vh; position: relative; overflow-x: hidden; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; padding: 30px 0; position: relative; }
+        .logo-container { display: flex; justify-content: center; margin-bottom: 15px; }
+        .logo-img { max-width: 300px; height: auto; object-fit: contain; }
+        .tag-line { font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px; }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .selection-panel { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 15px; padding: 30px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .selection-title { text-align: center; margin-bottom: 20px; font-size: 1.5rem; color: var(--accent); }
+        .city-buttons, .category-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
         
-        .offers-title {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-            color: var(--accent);
-        }
+        .btn { padding: 12px 25px; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; box-shadow: 0 4px 6px 6px rgba(0, 0, 0, 0.1); width: 250px; }
+        .city { background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.4); width: 300px; }
+        .city:hover, .city.active { background: var(--primary); border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
+        .category { background: rgba(255, 255, 255, 0.1); color: white; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .category:hover, .category.active { background: var(--secondary); border-color: var(--secondary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
+        .btn.selected { background-color: rgb(238, 67, 67); color: rgb(255, 255, 255); }
         
-        .offers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
+        .offers-title { text-align: center; margin-bottom: 30px; font-size: 1.8rem; color: var(--accent); }
         
-        .offer-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
+        /* NOVO: Grid ajustado para lado a lado no desktop */
+        #offers { margin-top: 30px; width: 100%; }
+        #offer-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; justify-items: center; }
+        #offer-images a { width: 100%; display: flex; justify-content: center; }
+        #offer-images img { width: 100%; max-width: 450px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transition: transform 0.3s; object-fit: contain; }
+        #offer-images img:hover { transform: scale(1.02); }
         
-        .offer-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
-        }
+        .social-links { display: flex; justify-content: center; gap: 20px; margin-top: 50px; padding-bottom: 30px; }
+        .social-link { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: white; font-size: 1.5rem; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        .social-link:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); }
+        .facebook:hover { background: #3b5998; } .instagram:hover { background: #e4405f; } .whatsapp:hover { background: #25d366; }
         
-        .offer-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            cursor: pointer;
-        }
+        .content { text-align: center; display: block; margin-top: 15px; }
+        .ven { background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.4); width: 300px; padding: 12px 25px; border: none; border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 0.80rem; box-shadow: 0 4px 6px 6px rgba(0, 0, 0, 0.1); width: 147px; text-align: center; justify-content: center; margin-top: 10px; }
+        .ven:hover { background: var(--primary); border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
         
-        .offer-info {
-            padding: 20px;
-        }
-        
-        .offer-name {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: white;
-        }
-        
-        .offer-valid {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 15px;
-        }
-        
-        .offer-btn {
-            display: inline-block;
-            padding: 8px 20px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .offer-btn:hover {
-            background: var(--accent);
-            color: var(--dark);
-            transform: translateY(-2px);
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 50px;
-            padding-bottom: 30px;
-        }
-        
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .social-link:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .facebook:hover { background: #3b5998; }
-        .instagram:hover { background: #e4405f; }
-        .whatsapp:hover { background: #25d366; }
-        .youtube:hover { background: #cd201f; }
-
-        .expired-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--primary);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            z-index: 1;
-        }
-
-        .no-selection {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        .btn.selected {
-            background-color: rgb(238, 67, 67);
-            color: rgb(255, 255, 255);
-        }
-
-        #offers {
-            margin-top: 30px;
-            justify-content: center;
-        }
-
-        #offer-images img {
-            width: 100%;
-            max-width: 500px;
-            margin: 5px;
-            border-radius: 10px;
-            justify-content: center;
-        }
-
-        .content {
-            text-align: center;
-            display: block;
-            margin-top: 15px;
-        }
-
-        .ven {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            width: 300px;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.80rem;
-            box-shadow: 0 4px 6px 6px rgba(0, 0, 0, 0.1);
-            width: 147px;
-            text-align: center;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .ven:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
-        }
-        
+        /* Retorna empilhado no mobile */
         @media (max-width: 768px) {
-            .logo-img {
-                max-width: 250px;
-            }
-
-            .city-buttons, .category-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .tagline {
-                font-size: 1rem;
-            }
-            
-            .selection-panel {
-                padding: 20px;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-                width: 280px;
-            }
-            
-            .offers-title {
-                font-size: 1.5rem;
-            }
-            
-            .offers-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                max-width: 95%;
-                max-height: 80%;
-            }
+            .logo-img { max-width: 250px; }
+            .city-buttons, .category-buttons { flex-direction: column; align-items: center; }
+            .selection-panel { padding: 20px; }
+            .btn { padding: 10px 20px; font-size: 0.9rem; width: 280px; }
+            .offers-title { font-size: 1.5rem; }
+            #offer-images { grid-template-columns: 1fr; } 
         }
     </style>
 </head>
 
 <body>
-
     <div class="container">
         <header>
             <div class="logo-container">
-                <!-- Substitua a URL pela imagem da sua logo -->
                 <img src="logo_pontomax_v3.png" alt="Logo Super Ofertas" class="logo-img">
             </div>
-            <p class="tagline">Ofertas imperdíveis para economizar de verdade!</p>
+            <p class="tagline" style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px;">Ofertas imperdíveis para economizar de verdade!</p>
             <a href="vendedores.html"><button class="ven"><i class="fas fa-user-tie"></i> VENDEDORES </button></a>
         </header>
         <div class="content">
@@ -400,145 +98,95 @@
     </div>
 
     <script>
-let selectedCity = '';
-let selectedCategory = '';
-const HOURS_BEFORE_MIDNIGHT = 5; // Número de horas antes da meia-noite para exibir a oferta
+        const SB_URL = "https://lfxwieekydjhhkiqqnhf.supabase.co";
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmeHdpZWVreWRqaGhraXFxbmhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgxNjIzNzAsImV4cCI6MjA5MzczODM3MH0.ftLV2m4qiEm7sDWqb0gQzwRZ4iUwnMU5anlZbUp4wJE";
+        const supabaseClient = supabase.createClient(SB_URL, SB_KEY, {
+            global: { fetch: (url, options) => fetch(url, { ...options, cache: 'no-store' }) }
+        });
 
-// Função para selecionar a cidade
-function selectCity(city) {
-    selectedCity = city;
+        let allOffers = [];
+        let selectedCity = '';
+        let selectedCategory = '';
 
-    // Remove a classe 'selected' dos outros botões de cidade
-    document.querySelectorAll('.city').forEach(button => {
-        button.classList.remove('selected');
-    });
-
-    // Adiciona a classe 'selected' ao botão clicado
-    document.getElementById(city).classList.add('selected');
-    
-    updateOffers();
-}
-
-// Função para selecionar a categoria
-function selectCategory(category) {
-    selectedCategory = category;
-
-    // Remove a classe 'selected' dos outros botões de categoria
-    document.querySelectorAll('.category').forEach(button => {
-        button.classList.remove('selected');
-    });
-
-    // Adiciona a classe 'selected' ao botão clicado
-    document.getElementById(category).classList.add('selected');
-
-    updateOffers();
-}
-
-// Função para atualizar as ofertas exibidas com base na cidade e categoria selecionadas
-function updateOffers() {
-  if (selectedCity && selectedCategory) {
-    const offerImages = document.getElementById('offer-images');
-    offerImages.innerHTML = '';
-    const offers = {
-        
-        balsas: {
-            supermercado: [
-                { url: 'https://i.imgur.com/X8pBmOl.png', startDate: '2026-05-06', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/NUJPiEu.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/TfSXR9k.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/mFUS2zv.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/3mD7aIq.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/pkyshjO.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/1VPpniY.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' }
-            ],
-            
-            bazar: [
-                { url: 'https://i.imgur.com/xI93NSW.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/hJQUWwD.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/Efd2SjU.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/ySw9M1z.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' },
-            ],
-    
-            eletro: [
-                { url: 'https://i.imgur.com/ffvIOPF.png', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-06', endDate: '2026-05-11' },
-                
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' }
-
-            ],
-
-            site: [
-                { url: 'https://i.imgur.com/ffvIOPF.png', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-06', endDate: '2026-05-11' },
-                
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' }
-            ]
-        },
-        fortaleza: {
-            supermercado: [
-                { url: 'https://i.imgur.com/X8pBmOl.png', startDate: '2026-05-06', endDate: '2026-05-07' },
-                { url: 'https://i.imgur.com/NUJPiEu.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/TfSXR9k.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/mFUS2zv.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/3mD7aIq.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/pkyshjO.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' },
-                { url: 'https://i.imgur.com/1VPpniY.jpeg', startDate: '2026-05-07', endDate: '2026-05-11' }
-            ],
-            
-            bazar: [
-                { url: 'https://i.imgur.com/YRaurrw.jpeg', startDate: '2026-05-05', endDate: '2026-05-07' }
-            ],
-    
-            eletro: [
-                { url: 'https://i.imgur.com/ffvIOPF.png', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-06', endDate: '2026-05-11' },
-                
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' }
-            ],
-
-            site: [
-                { url: 'https://i.imgur.com/ffvIOPF.png', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-06', endDate: '2026-05-11' },
-                
-                { url: 'https://i.imgur.com/FYH9anb.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/lvJhsbs.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/KCh1zCD.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Io1EyRr.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' },
-                { url: 'https://i.imgur.com/Q74h8r8.jpeg', link: 'https://www.pontomaxonline.com.br/', startDate: '2026-05-01', endDate: '2026-05-12' }
-            ]
+        async function fetchOffers() {
+            const { data, error } = await supabaseClient.from('encartes').select('*');
+            if (!error && data) {
+                allOffers = data;
+                updateOffers();
+            } else {
+                console.error("Erro ao buscar ofertas:", error);
+            }
         }
-    };
 
-        const now = new Date();
-    const selectedOffers = offers[selectedCity][selectedCategory];
-    selectedOffers.forEach(offer => {
-      const offerStart = new Date(offer.startDate);
-      const offerEnd = new Date(offer.endDate);
-      const previousDayBeforeMidnight = new Date(offerStart);
-      previousDayBeforeMidnight.setDate(offerStart.getDate());
-      previousDayBeforeMidnight.setHours(24 - HOURS_BEFORE_MIDNIGHT, 0, 0);
-      if (now >= previousDayBeforeMidnight && now <= offerEnd) {
-        const a = document.createElement('a');
-        a.href = offer.link;
-        a.target = '_blank';  // Abre o link em uma nova aba
-        const img = document.createElement('img');
-        img.src = offer.url;
-        a.appendChild(img);
-        offerImages.appendChild(a);
-      }
-    });
-  }
-}
+        function selectCity(city) {
+            selectedCity = city;
+            document.querySelectorAll('.city').forEach(button => button.classList.remove('selected'));
+            document.getElementById(city).classList.add('selected');
+            updateOffers();
+        }
 
+        function selectCategory(category) {
+            selectedCategory = category;
+            document.querySelectorAll('.category').forEach(button => button.classList.remove('selected'));
+            document.getElementById(category).classList.add('selected');
+            updateOffers();
+        }
+
+        function updateOffers() {
+            if (!selectedCity || !selectedCategory) return;
+
+            const offerImages = document.getElementById('offer-images');
+            offerImages.innerHTML = ''; 
+
+            const mapCities = {
+                'balsas': 'Balsas - MA',
+                'fortaleza': 'Fortaleza dos Nogueiras - MA'
+            };
+            const mapCategories = {
+                'supermercado': 'mercado', 
+                'bazar': 'bazar',
+                'eletro': 'eletro',
+                'site': 'site'
+            };
+
+            const targetCity = mapCities[selectedCity];
+            const targetCategory = mapCategories[selectedCategory];
+            const now = new Date();
+
+            const validOffers = allOffers.filter(item => {
+                if (item.categoria !== targetCategory) return false;
+                
+                if (item.cidades && !item.cidades.includes(targetCity)) return false;
+
+                const dataInicio = new Date(item.data_inicio + 'T00:00:00');
+                const gatilho = new Date(dataInicio);
+                gatilho.setDate(gatilho.getDate() - 1);
+                gatilho.setHours(19, 0, 0, 0);
+
+                const dataFim = new Date(item.data_fim + 'T23:59:59');
+
+                return (now >= gatilho && now <= dataFim);
+            });
+
+            if (validOffers.length === 0) {
+                offerImages.innerHTML = '<p style="color: white; opacity: 0.8; font-weight: bold; margin-top: 15px;">Nenhuma oferta vigente para esta seleção no momento.</p>';
+                return;
+            }
+
+            validOffers.forEach(offer => {
+                const a = document.createElement('a');
+                a.href = offer.url_imagem;
+                a.target = '_blank';
+                
+                const img = document.createElement('img');
+                img.src = offer.url_imagem;
+                
+                a.appendChild(img);
+                offerImages.appendChild(a);
+            });
+        }
+
+        fetchOffers();
     </script>
 </body>
-
 </html>
