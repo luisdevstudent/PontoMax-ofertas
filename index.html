@@ -33,7 +33,10 @@
         /* NOVO: Grid ajustado para lado a lado no desktop */
         #offers { margin-top: 30px; width: 100%; }
         #offer-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; width: 100%; justify-items: center; }
-        #offer-images a { width: 100%; display: flex; justify-content: center; }
+        
+        /* Container que substitui a antiga tag <a> */
+        .offer-wrapper { width: 100%; display: flex; justify-content: center; }
+        
         #offer-images img { width: 100%; max-width: 450px; border-radius: 10px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transition: transform 0.3s; object-fit: contain; }
         #offer-images img:hover { transform: scale(1.02); }
         
@@ -155,7 +158,6 @@
 
             const validOffers = allOffers.filter(item => {
                 if (item.categoria !== targetCategory) return false;
-                
                 if (item.cidades && !item.cidades.includes(targetCity)) return false;
 
                 const dataInicio = new Date(item.data_inicio + 'T00:00:00');
@@ -174,15 +176,26 @@
             }
 
             validOffers.forEach(offer => {
-                const a = document.createElement('a');
-                a.href = offer.url_imagem;
-                a.target = '_blank';
+                // Cria um container (div) no lugar do antigo link (a)
+                const wrapper = document.createElement('div');
+                wrapper.className = 'offer-wrapper';
                 
                 const img = document.createElement('img');
-                img.src = offer.url_imagem;
+                img.alt = 'Oferta';
                 
-                a.appendChild(img);
-                offerImages.appendChild(a);
+                // Técnica Blob: Faz o download da imagem em segundo plano e oculta a URL do Supabase
+                fetch(offer.url_imagem)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        img.src = URL.createObjectURL(blob);
+                    })
+                    .catch(() => {
+                        // Fallback caso a técnica Blob sofra algum bloqueio de rede no celular do cliente
+                        img.src = offer.url_imagem;
+                    });
+                
+                wrapper.appendChild(img);
+                offerImages.appendChild(wrapper);
             });
         }
 
