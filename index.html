@@ -111,34 +111,6 @@
         let selectedCity = '';
         let selectedCategory = '';
 
-        // --- NOVA FUNÇÃO DE CACHE (BASTIDORES) ---
-        async function carregarImagemComCache(url, imgElement) {
-            try {
-                const cacheName = 'pontomax-encartes-v1';
-                const cache = await caches.open(cacheName);
-                
-                // 1. Pergunta ao navegador se a imagem já está salva
-                let response = await cache.match(url);
-
-                if (!response) {
-                    // 2. Se NÃO estiver, baixa do Supabase (consome banda)
-                    response = await fetch(url);
-                    if (response.ok) {
-                        // 3. Salva uma cópia exata no cache para o futuro
-                        cache.put(url, response.clone());
-                    }
-                }
-
-                // 4. Transforma em Blob (usando o cache ou o download recente) e exibe
-                const blob = await response.blob();
-                imgElement.src = URL.createObjectURL(blob);
-            } catch (error) {
-                // Fallback de segurança se o celular do cliente bloquear o cache
-                imgElement.src = url;
-            }
-        }
-        // -----------------------------------------
-
         async function fetchOffers() {
             const { data, error } = await supabaseClient.from('encartes').select('*');
             if (!error && data) {
@@ -211,8 +183,8 @@
                 const img = document.createElement('img');
                 img.alt = 'Oferta';
                 
-                // CHAMA A MÁGICA DO CACHE AQUI
-                carregarImagemComCache(offer.url_imagem, img);
+                // Nova abordagem: Puxa direto da URL, deixando o navegador fazer o cache e economizando banda
+                img.src = offer.url_imagem;
                 
                 wrapper.appendChild(img);
                 offerImages.appendChild(wrapper);
